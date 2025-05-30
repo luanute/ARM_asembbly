@@ -1,0 +1,87 @@
+RCC_APB2ENR     EQU    0x40021018	
+
+GPIOA_CRL	    EQU    0x40010800
+GPIOA_CRH	    EQU    0x40010804
+GPIOA_IDR	    EQU    0x40010808
+GPIOA_ODR	    EQU    0x4001080C
+GPIOA_BSRR      EQU    0x40010810
+
+GPIOB_CRL	    EQU    0x40010C00
+GPIOB_CRH	    EQU    0x40010C04
+GPIOB_IDR	    EQU    0x40010C08
+GPIOB_ODR	    EQU    0x40010C0C
+
+
+GPIOC_CRL	    EQU    0x40011000
+GPIOC_CRH	    EQU    0x40011004
+GPIOC_IDR	    EQU    0x40011008
+GPIOC_ODR	    EQU    0x4001100C
+
+
+			AREA GPIO, CODE, READONLY
+			ENTRY
+			EXPORT __main
+			
+__main
+			
+			LDR R0,=RCC_APB2ENR
+			LDR R1,=RCC_APB2ENR
+			LDR R1,[R1]
+			ORR R1,R1, #0xC
+			STR R1,[R0]
+			
+			LDR R0,=GPIOA_CRL
+			LDR R1,=GPIOA_CRL	
+			LDR R1,[R1]
+			ORR R1,R1, #0x33
+			STR R1,[R0]
+		
+
+            LDR R1,=GPIOB_CRL
+	        LDR R0,=0x88        
+	        STR R0,[R1]
+
+
+
+
+
+			
+LOOP
+			LDR R1,=GPIOA_ODR
+			LDR R2,[R1]
+			MOV R2,#0x1
+			STR R2,[R1]
+			
+			
+			
+KIEM_TRA_NUT_NHAN
+            
+			LDR R1,=GPIOB_IDR
+			LDR R2,[R1]
+			CMP R2,#0x1
+			BNE KIEM_TRA_NUT_NHAN
+
+;CHO_BUONG   
+;			LDR R2,[R1]
+;            CMP R2,#0x1
+;			BEQ CHO_BUONG
+			
+			LDR R1,=GPIOA_ODR
+			LDR R2,[R1]
+			MVN R2,R2
+            STR R2,[R1]
+            BL delay
+			
+            B KIEM_TRA_NUT_NHAN
+
+
+
+       
+
+delay 
+		LDR R5,=1000000
+d_L2	SUBS R5,R5,#1
+		BNE d_L2
+		BX LR
+
+END
