@@ -1,0 +1,22 @@
+# Thư mục build và output
+Debug/
+Output/
+*.axf
+*.o
+*.d
+*.map
+*.bin
+*.hex
+
+# Các file project cá nhân của Keil
+*.uvoptx
+*.uvguix*
+*.uvprojx.*
+
+# File workspace cá nhân
+*.workspace
+
+# File log, tạm thời
+*.log
+*.bak
+*.tmp
